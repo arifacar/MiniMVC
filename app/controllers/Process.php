@@ -20,6 +20,12 @@ class Process extends Controller {
         
         $result=$process_model->addContactMessage($params);
         
+        /**
+         * Using MailSender method
+         */
+        
+        //$mailSender = new MailSender($toMail, $fromMail, $fromName, $subject, $body);
+        
         if ($result==1){
             $resultData["result"]=" Basariyla kaydedildi ";
             $this->response->redirect("../contact?result=success");
