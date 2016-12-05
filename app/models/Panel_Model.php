@@ -149,6 +149,45 @@ class Panel_Model extends Model {
         return $result;
     }
 
+    /**
+     * 
+     * @param type $tableName
+     * @param type $array
+     * @return inserted item from DB
+     */
+    public function insertItem($tableName, $array = array()) {
+        $lastInsertedId = $this->db->insertReturnID($tableName, $array);
+        return $this->getItem($tableName, $lastInsertedId);
+    }
+
+    /**
+     * 
+     * @param type $tableName
+     * @param type $id
+     * @return 1 item from defined table.
+     */
+    public function getItem($tableName, $id) {
+        $params = array(
+            "ID" => $id
+        );
+
+        $query = "select * from " . $tableName . " where ID=:ID";
+        $result = $this->db->select($query, $params);
+        return $result[0];
+    }
+
+    /**
+     * 
+     * @param type $tableName
+     * @param type $data
+     * @param type $ID
+     * @return updated item from DB
+     */
+    public function updateItem($tableName, $data, $ID) {
+        $this->db->update($tableName, $data, "ID=" . $ID);
+        return $this->getItem($tableName, $ID);
+    }
+
 }
 
 ?>

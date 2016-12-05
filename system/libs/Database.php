@@ -111,5 +111,24 @@ class Database extends PDO {
     public function delete($tableName, $where, $limit = 1) {
         return $this->exec("DELETE FROM $tableName WHERE $where LIMIT $limit");
     }
+    
+    /**
+     * 
+     * @param type $tableName
+     * @param type $data
+     * @return inserted data ID
+     */
+    public function insertReturnID($tableName, $data) {
+        $fieldKeys = implode(",", array_keys($data));
+        $fieldValues = ":" . implode(", :", array_keys($data)); // ihtiyacimiz olan :ad, :soyad, :telno formatini olusturduk.
+        $sql = "INSERT INTO $tableName ($fieldKeys) VALUES ($fieldValues)";
+        $sth = $this->prepare($sql);
+        foreach ($data as $key => $value) {
+            $sth->bindValue(":$key", $value); // bindValue (":ad", "Arif"); bindValue (":soyad", "Acar"); ... 
+        }
+        $sth->execute();
+        
+        return $this->lastInsertId();
+    }    
 
 }
