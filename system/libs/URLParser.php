@@ -72,6 +72,40 @@ class URLParser extends Controller {
         if (!isset($this->_url[1])) {
             include $this->_controllerPath . $this->_controllerName . '.php';
             $this->_controller = new $this->_controllerName();
+        } else if ($this->_url[1] == "blog") {
+            /**
+             * Bu kullanım doğru bir kullanım olmamakla birlikte SEO yapılandırması için 
+             * sitelere özel olarak tasarlanmıştır. SEO dışında bu şekilde bir kullanım
+             * kesinlikle önerilmemektedir. 
+             * 
+             *  blog/1  -> blogları sayfa sayfa gösterir
+             *  blog/yazi -> blog yazısının detaylarını gösterir
+             *  blog/kategori/kategori-adi -> kategori adına göre gösterim yapmayı sağlar
+             *  blog/kategori/kategori-adi/1 -> kategori adına göre gösterimleri sayfa sayfa gösterir.
+             * 
+             */
+            include_once 'app/controllers/Blog.php';
+            $blog = new Blog();
+
+            if (isset($this->_url[2]) && is_numeric($this->_url[2])) {
+                $categoryPage = 2;
+                if (isset($this->_url[2]))
+                    $categoryPage = $this->_url[2];
+                $blog->index($this->_url[2]);
+            } elseif (isset($this->_url[2]) && $this->_url[2] == "kategori") {
+                $categoryName = "";
+                $categoryPage = 2;
+                if (isset($this->_url[3]))
+                    $categoryName = $this->_url[3];
+
+                $blog->category($categoryName, $categoryPage);
+            } elseif (isset($this->_url[2])) {
+                $blog->blogDetail($this->_url[2]);
+            } else {
+                $blog->index(1);
+            }
+            //
+        //
         } else {
             $this->_controllerName = ucwords($this->_url[1]);
             $fileName = $this->_controllerPath . $this->_controllerName . ".php";
