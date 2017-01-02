@@ -11,6 +11,7 @@ class Panel extends Controller {
         if (Session::get("login") == false) {
             Session::destroy();
             header("Location:" . ADMIN_URL);
+			exit;
         }
     }
 

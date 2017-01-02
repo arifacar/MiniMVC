@@ -9,7 +9,6 @@ class Admin extends Controller {
     }
 
     public function index() {
-        //var_dump(ADMIN_URL);exit;
         $this->login();
     }
 
@@ -32,7 +31,6 @@ class Admin extends Controller {
         $result = $admin_model->userControl($params);
 
         if (!$result) {
-            //var_dump("Location:".ADMIN_URL);exit;
             header("Location:" . ADMIN_URL);
         } else {
             Session::init();
