@@ -17,9 +17,9 @@
  * 
  * @package	MiniMVC
  * @author	Arif Acar
- * @copyright	Copyright (c) 2015 - 2016, Arif Acar. (http://www.arifacar.com/)
+ * @copyright	Copyright (c) 2015 - 2017, Arif Acar. (http://www.arifacar.com/)
  * @link	http://bitly.com/MiniMVC
- * @since	Version 1.0.0
+ * @since	Version 1.1.4
  * @filesource
  */
 
