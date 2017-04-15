@@ -101,6 +101,36 @@ class Generic_Model extends Model {
                         " WHERE " . $whereClause .
                         " LIMIT " . $limit . " ," . LIST_PER_PAGE_SIZE, $params);
     }
+
+    /**
+     * @param String $tableName
+     * @param String $whereClause
+     * @param Array $params
+     * @return Array
+     */
+    public function getAllItemList($tableName, $whereClause, $params)
+    {
+        return $this->db->select("SELECT * FROM " . $tableName .
+            " WHERE " . $whereClause, $params);
+    }
+
+    /**
+     * @param String $tableName
+     * @param String $attribute
+     * @param String $value
+     * @return null|type
+     */
+    public function getItemWithAttribute($tableName, $attribute, $value)
+    {
+        $params = array($attribute => $value);
+
+        $query = "SELECT * FROM " . $tableName . " WHERE " . $attribute . " LIKE :" . $attribute;
+        $result = $this->db->select($query, $params);
+        if ($result == null)
+            return null;
+        else
+            return $result;
+    }
 }
 
 ?>
